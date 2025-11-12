@@ -1,14 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import ProductGrid from './components/ProductGrid';
-import Cart from './components/Cart';
 import Footer from './components/Footer';
+import Cart from './components/Cart';
+import Home from './pages/Home';
+import About from './pages/About';
+import ProductDetail from './pages/ProductDetail';
+import Contact from './pages/Contact';
+import Blog from './pages/Blog';
+import Login from './pages/Login';
+import Checkout from './pages/Checkout';
 import './styles/App.css';
+
+// Loading component
+const LoadingScreen = () => (
+  <div className="loading-screen">
+    <div className="loading-spinner"></div>
+    <p>Đang tải...</p>
+  </div>
+);
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
 
   const handleAddToCart = (product) => {
     const existingItem = cartItems.find(item => item.id === product.id);
@@ -42,7 +75,6 @@ function App() {
   };
 
   const showNotification = (message) => {
-    // Simple notification - in production, you might use a library like react-toastify
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
@@ -55,33 +87,49 @@ function App() {
     setTimeout(() => {
       notification.classList.remove('show');
       setTimeout(() => {
-        document.body.removeChild(notification);
+        if (notification.parentNode) {
+          document.body.removeChild(notification);
+        }
       }, 300);
     }, 3000);
   };
 
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <div className="App">
-      <Header
-        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-        onCartClick={() => setIsCartOpen(true)}
-      />
+    <Router>
+      <div className="App">
+        <ScrollToTop />
+        <Header
+          cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+          onCartClick={() => setIsCartOpen(true)}
+        />
 
-      <main>
-        <Hero />
-        <ProductGrid onAddToCart={handleAddToCart} />
-      </main>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/product/:id" element={<ProductDetail onAddToCart={handleAddToCart} />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/checkout" element={<Checkout cartItems={cartItems} />} />
+          </Routes>
+        </main>
 
-      <Footer />
+        <Footer />
 
-      <Cart
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-      />
-    </div>
+        <Cart
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cartItems={cartItems}
+          onUpdateQuantity={handleUpdateQuantity}
+          onRemoveItem={handleRemoveItem}
+        />
+      </div>
+    </Router>
   );
 }
 

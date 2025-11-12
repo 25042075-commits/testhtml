@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 
 const Header = ({ cartCount, onCartClick }) => {
@@ -30,17 +31,17 @@ const Header = ({ cartCount, onCartClick }) => {
               ☰
             </button>
 
-            <div className="logo">
+            <Link to="/" className="logo">
               <h1>Luxe Beauty</h1>
               <span className="logo-tagline">Làm đẹp tự nhiên</span>
-            </div>
+            </Link>
 
             <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
-              <a href="#home" className="nav-link active">Trang chủ</a>
-              <a href="#products" className="nav-link">Sản phẩm</a>
-              <a href="#bestseller" className="nav-link">Best Seller</a>
-              <a href="#new" className="nav-link">Hàng mới</a>
-              <a href="#promotion" className="nav-link sale-link">Khuyến mãi 🔥</a>
+              <Link to="/" className="nav-link">Trang chủ</Link>
+              <Link to="/#products" className="nav-link">Sản phẩm</Link>
+              <Link to="/about" className="nav-link">Về chúng tôi</Link>
+              <Link to="/blog" className="nav-link">Blog</Link>
+              <Link to="/contact" className="nav-link">Liên hệ</Link>
             </nav>
 
             <div className="header-actions">
@@ -58,9 +59,9 @@ const Header = ({ cartCount, onCartClick }) => {
                 🛍️
                 {cartCount > 0 && <span className="badge">{cartCount}</span>}
               </button>
-              <button className="action-btn user-btn">
+              <Link to="/login" className="action-btn user-btn">
                 👤
-              </button>
+              </Link>
             </div>
           </div>
 

@@ -1,0 +1,132 @@
+.beauty-tips-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.section-header-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 50px;
+}
+
+.view-all-link {
+  color: #667eea;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 16px;
+  transition: transform 0.3s;
+  display: inline-block;
+}
+
+.view-all-link:hover {
+  transform: translateX(5px);
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.tip-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s;
+}
+
+.tip-card:hover {
+  transform: translateY(-10px);
+}
+
+.tip-image {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.tip-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.tip-card:hover .tip-image img {
+  transform: scale(1.1);
+}
+
+.tip-category {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tip-content {
+  padding: 25px;
+}
+
+.tip-content h3 {
+  font-size: 20px;
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.tip-content p {
+  color: #718096;
+  line-height: 1.7;
+  margin: 0 0 20px;
+  font-size: 15px;
+}
+
+.tip-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.read-time {
+  font-size: 13px;
+  color: #718096;
+}
+
+.read-more {
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s;
+  display: inline-block;
+}
+
+.read-more:hover {
+  transform: translateX(5px);
+}
+
+@media (max-width: 968px) {
+  .tips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-header-split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+}
